@@ -1,0 +1,17 @@
+{
+  "name": "cliffkinchen-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource/eb-garamond": "^5.3.0",
+    "@fontsource/lato": "^5.3.0",
+    "@fontsource/montserrat": "^5.3.0",
+    "astro": "^7.3.8"
+  }
+}
