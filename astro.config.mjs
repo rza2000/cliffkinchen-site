@@ -13,10 +13,16 @@ const prefixRootLinks = {
     'astro:build:done': ({ dir }) => {
       if (!base) return;
       const root = fileURLToPath(dir);
-      for (const f of readdirSync(root).filter((n) => n.endsWith('.html'))) {
+      const files = [
+        ...readdirSync(root).filter((n) => n.endsWith('.html')),
+        ...readdirSync(join(root, '_astro')).filter((n) => n.endsWith('.css')).map((n) => join('_astro', n)),
+      ];
+      for (const f of files) {
         const p = join(root, f);
-        const html = readFileSync(p, 'utf8').replace(/\b(href|src)="\/(?!\/)/g, (_, a) => `${a}="${base}/`);
-        writeFileSync(p, html);
+        const out = readFileSync(p, 'utf8')
+          .replace(/\b(href|src)="\/(?!\/)/g, (_, a) => `${a}="${base}/`)
+          .replace(/url\((["']?)\/(?!\/)/g, (_, q) => `url(${q}${base}/`);
+        writeFileSync(p, out);
       }
     },
   },
