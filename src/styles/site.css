@@ -1,12 +1,23 @@
-*, *::before, *::after { box-sizing: border-box; }
+/* The same font files the original site served. EB Garamond has no italic or
+   bold here on purpose: the browser slants and thickens it, as it did before. */
+@font-face { font-family: 'Lato'; font-style: normal; font-weight: 300; src: url('/fonts/lato-300.woff2') format('woff2'), url('/fonts/lato-300.woff') format('woff'); }
+@font-face { font-family: 'Lato'; font-style: italic; font-weight: 300; src: url('/fonts/lato-300i.woff2') format('woff2'), url('/fonts/lato-300i.woff') format('woff'); }
+@font-face { font-family: 'Lato'; font-style: normal; font-weight: 400; src: url('/fonts/lato-400.woff2') format('woff2'), url('/fonts/lato-400.woff') format('woff'); }
+@font-face { font-family: 'Lato'; font-style: italic; font-weight: 400; src: url('/fonts/lato-400i.woff2') format('woff2'), url('/fonts/lato-400i.woff') format('woff'); }
+@font-face { font-family: 'Lato'; font-style: normal; font-weight: 700; src: url('/fonts/lato-700.woff2') format('woff2'), url('/fonts/lato-700.woff') format('woff'); }
+@font-face { font-family: 'Lato'; font-style: italic; font-weight: 700; src: url('/fonts/lato-700i.woff2') format('woff2'), url('/fonts/lato-700i.woff') format('woff'); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 400; src: url('/fonts/montserrat-400.woff2') format('woff2'), url('/fonts/montserrat-400.woff') format('woff'); }
+@font-face { font-family: 'Montserrat'; font-style: normal; font-weight: 700; src: url('/fonts/montserrat-700.woff2') format('woff2'), url('/fonts/montserrat-700.woff') format('woff'); }
+@font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 400; src: url('/fonts/eb-garamond-400.woff2') format('woff2'), url('/fonts/eb-garamond-400.woff') format('woff'); }
+.site-nav, .site-nav *, .container, .site-footer, form * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; font-family: 'Lato', sans-serif; font-size: 16px; font-weight: 500; color: #000; background: #0d1f3c; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { margin: 0; font-family: sans-serif; font-size: 16px; font-weight: 500; color: #000; background: #0d1f3c; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 img { max-width: 100%; height: auto; }
 
 /* Navigation */
 .site-nav { position: fixed; top: 0; z-index: 12; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 20px 40px; background: #0d1f3c; border-bottom: 2px solid #c9a84c; }
 .site-nav .logo, .site-nav .logo img { display: block; }
-.site-nav ul { display: flex; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.site-nav ul { display: flex; gap: 9px; margin: 0 5px 0 0; padding: 0; list-style: none; }
 .site-nav nav a { display: block; padding: 12px 20px; border: 1px solid transparent; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: .05em; text-transform: uppercase; text-decoration: none; transition: opacity .2s; }
 .site-nav nav a:hover { opacity: .6; }
 .site-nav nav a[aria-current] { border-color: #fff; }
@@ -20,13 +31,13 @@ main.under-nav { padding-top: 80px; }
 /* Sections */
 .container { width: 100%; max-width: 1200px; margin: 0 auto; }
 .sec-header { background: #000; color: #fff; }
-.sec-header .container { padding: 80px 40px; }
+.sec-header .container { padding: 92px 40px 80px; }
 .sec-header .wsite-content-title { text-align: center; }
 .sec-body .container { padding: 60px 40px; }
-.cols { display: flex; margin: 0 -15px; }
-.col { flex: 0 0 var(--w); width: var(--w); min-width: 0; padding: 0 15px; }
-.wsite-image { margin: 10px 0; }
-.wsite-image a { display: block; }
+.cols { display: table; width: calc(100% + 30px); margin: 0 -15px; table-layout: fixed; border-collapse: collapse; }
+.col { display: table-cell; width: var(--w); padding: 0 15px; vertical-align: top; }
+.wsite-image { padding: 10px 0; }
+.wsite-image img { margin-bottom: 10px; }
 
 /* Type defaults the page blocks were written against. They use !important
    because the blocks' inline styles only win where they are also !important. */
@@ -38,6 +49,17 @@ main.under-nav { padding-top: 80px; }
   .sec-body p, .sec-body .paragraph { font-size: 34px !important; line-height: 25px !important; }
 }
 p a { color: inherit; font-weight: 600; text-decoration: underline; }
+
+/* Blank sections hold their height on the original site. */
+.sec hr { width: 100%; height: 1px; margin: 0; border: 0; background: rgba(0,0,0,.13); }
+.sec-cutoff .container { padding-bottom: 0; }
+.sec-inset .container { padding-right: 80px; padding-left: 80px; }
+.sec-blank { height: 230px; }
+@media (max-width: 767px) { .sec-blank { height: auto; } }
+
+/* Scroll fade-in, same timing as the original site's ScrollReveal call. */
+.reveal main > section { opacity: 0; transform: translateY(30px); transition: opacity .8s ease-in-out, transform .8s ease-in-out; }
+.reveal main > section.shown { opacity: 1; transform: none; }
 
 /* Footer */
 .site-footer { max-width: 1200px; margin: 0 auto; padding: 60px 40px; font-size: 14px; }
@@ -51,7 +73,7 @@ p a { color: inherit; font-weight: 600; text-decoration: underline; }
 
 @media (max-width: 992px) {
   .hamburger { display: block; }
-  .site-nav { padding: 20px; }
+  .site-nav { padding: 5px 20px; }
   .site-nav nav { position: fixed; top: 0; left: 0; display: none; width: 100%; height: 100%; padding-top: 90px; background: #fff; overflow-y: auto; }
   .site-nav ul { display: block; text-align: center; }
   .site-nav nav a { padding: 18px; color: #000; font-size: 14px; border: 0; }
@@ -61,21 +83,25 @@ p a { color: inherit; font-weight: 600; text-decoration: underline; }
   .menu-open .hamburger span { background: transparent; }
   .menu-open .hamburger span::before { top: 2px; transform: rotate(45deg); background: #000; }
   .menu-open .hamburger span::after { top: 0; transform: rotate(-45deg); background: #000; }
-  .sec-header .container { padding: 60px 20px; word-wrap: break-word; }
+  .sec-header .container { padding: 62px 20px 60px; word-wrap: break-word; }
   .sec-header h2 { font-size: 50px; }
   .sec-body .container { padding: 30px 20px; }
+  .sec-inset .container { padding: 30px 40px; }
+  .sec-cutoff .container { padding-bottom: 0; }
   .site-footer { padding: 30px 20px; }
   main.under-nav { padding-top: 50px; }
 }
 @media (max-width: 767px) {
-  .cols { display: block; margin: 0; }
-  .col { width: 100%; padding: 0; }
+  .cols { display: block; width: auto; margin: 0; }
+  .col { display: block; width: 100%; padding: 0; box-sizing: border-box; }
   .sec-header h2 { font-size: 9vw; }
   .sec-body h2 { font-size: 24px !important; }
-  .site-nav { padding: 4px 20px; }
   .sec-body font[size="7"] { font-size: 24px; }
   .sec-body font[size="3"] { font-size: 17.6px; }
   .blog-empty h1 { font-size: 36px; }
   /* Two-column blocks are laid out as inline tables; stack them on phones. */
-  main [style*="display:table"], main [style*="display: table"] { display: block !important; width: 100% !important; }
+  main [style*="display:table"], main [style*="display: table"] { display: block !important; width: 100% !important; box-sizing: border-box; }
+  main [style*="display:table-cell"] + [style*="display:table-cell"] { margin-top: 24px; }
+  /* Full-bleed bands use negative offsets that clip against the section edge once stacked. */
+  main [style*="left:-20px"] { right: 0 !important; left: 0 !important; width: 100% !important; margin-right: 0 !important; margin-left: 0 !important; padding-right: 24px !important; padding-left: 24px !important; }
 }

@@ -1,13 +1,5 @@
 ---
 
-import '@fontsource/lato/400.css';
-import '@fontsource/lato/700.css';
-import '@fontsource/eb-garamond/400.css';
-import '@fontsource/eb-garamond/400-italic.css';
-import '@fontsource/eb-garamond/500.css';
-import '@fontsource/eb-garamond/600.css';
-import '@fontsource/montserrat/500.css';
-import '@fontsource/montserrat/700.css';
 import '../styles/site.css';
 import footer from '../content-html/_footer.html?raw';
 
@@ -31,6 +23,9 @@ const isPreview = !!process.env.SITE_BASE;
     <link rel="canonical" href={new URL(path, Astro.site).href} />
     <link rel="icon" type="image/png" href="/img/logo-ck.png" />
     {isPreview && <meta name="robots" content="noindex" />}
+    <script is:inline>
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');
+    </script>
   </head>
   <body>
     <header class="site-nav">
@@ -50,6 +45,17 @@ const isPreview = !!process.env.SITE_BASE;
         const open = document.body.classList.toggle('menu-open');
         button.setAttribute('aria-expanded', String(open));
       });
+
+      if (document.documentElement.classList.contains('reveal')) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.filter((e) => e.isIntersecting).forEach((e, i) => {
+            e.target.style.transitionDelay = `${200 + i * 100}ms`;
+            e.target.classList.add('shown');
+            observer.unobserve(e.target);
+          });
+        });
+        document.querySelectorAll('main > section').forEach((s) => observer.observe(s));
+      }
     </script>
   </body>
 </html>
