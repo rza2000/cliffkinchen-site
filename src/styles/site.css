@@ -96,15 +96,26 @@ p a { color: inherit; font-weight: 600; text-decoration: underline; }
   main [style*="justify-content:space-around"] { display: grid !important; grid-template-columns: repeat(4, 1fr); align-items: start !important; }
   main [style*="justify-content:space-around"] > [style*="min-width:160px"] { min-width: 0 !important; }
   main [style*="justify-content:space-around"] > [style*="width:1px"] { display: none; }
+  /* Buttons sit side by side on desktop; give them room once they stack. */
+  main a[style*="display:inline-block"] { margin-bottom: 10px; }
   /* Card titles are set not to wrap, which runs them out of narrow cards. */
   main [style*="white-space:nowrap"] { white-space: normal !important; }
 }
+/* Large headings have fixed inline sizes; --hu scales them down on smaller screens so words do not strand. */
+main h1, main h2, main h3, main [style*="EB Garamond"] { text-wrap: balance; }
+@media (min-width: 768px) and (max-width: 992px) { :root { --hu: .11vw; } }
 /* The site-wide 25px line height only works while this 48px line stays on one row. */
 @media (min-width: 768px) and (max-width: 992px) {
-  .sec-body font[size="7"] strong { display: inline-block; line-height: 1.1; }
+  .sec-body font[size="7"] strong { display: inline-block; line-height: 1.1; text-wrap: balance; }
 }
 @media (max-width: 767px) {
   main [style*="justify-content:space-around"] { grid-template-columns: 1fr; }
+  :root { --hu: .2vw; }
+  /* Eyebrow labels need tighter tracking to hold one line. */
+  .sec-header p[style*="letter-spacing:4px"] { letter-spacing: 2.5px !important; }
+  /* Photos set to align right read as misplaced once they stack. */
+  .cols .wsite-image { text-align: center !important; }
+  .sec-inset .container { padding-right: 20px; padding-left: 20px; }
   .cols { display: block; width: auto; margin: 0; }
   .col { display: block; width: 100%; padding: 0; box-sizing: border-box; }
   .sec-header h2 { font-size: 9vw; }
