@@ -27,7 +27,7 @@ const isPreview = !!process.env.SITE_BASE;
       if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');
     </script>
   </head>
-  <body>
+  <body class:list={{ 'light-nav': !overlayNav }}>
     <header class="site-nav">
       <a class="logo" href="/"><img src="/img/logo-ck.png" alt="Cliff Kinchen | The Kinchen Standard" width="50" height="50" /></a>
       <button class="hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button>
@@ -45,6 +45,10 @@ const isPreview = !!process.env.SITE_BASE;
         const open = document.body.classList.toggle('menu-open');
         button.setAttribute('aria-expanded', String(open));
       });
+
+      const onScroll = () => document.body.classList.toggle('scrolled', scrollY > 50);
+      addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
 
       if (document.documentElement.classList.contains('reveal')) {
         const observer = new IntersectionObserver((entries) => {
