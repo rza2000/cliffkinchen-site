@@ -12,6 +12,41 @@ const nav = [
   ['Blog', '/blog.html'],
 ];
 const isPreview = !!process.env.SITE_BASE;
+const canonical = path ? new URL(path, Astro.site).href : undefined;
+const shareImage = new URL('/img/og-card.jpg', Astro.site).href;
+
+// Tells search engines who the site is about. Only the home page carries it.
+const book = 'https://www.amazon.com/dp/B0GPLSZJPX';
+const structuredData = path === '/' && {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.cliffkinchen.com/#website',
+      url: 'https://www.cliffkinchen.com/',
+      name: 'Cliff Kinchen | The Kinchen Standard',
+      publisher: { '@id': 'https://www.cliffkinchen.com/#cliff' },
+    },
+    {
+      '@type': 'Person',
+      '@id': 'https://www.cliffkinchen.com/#cliff',
+      name: 'Cliff Kinchen',
+      alternateName: 'Kyoshi Cliff Kinchen',
+      url: 'https://www.cliffkinchen.com/',
+      image: new URL('/img/headshot.jpg', Astro.site).href,
+      jobTitle: 'Leadership Educator, Speaker, Author',
+      email: 'mailto:info@cliffkinchen.com',
+      sameAs: ['https://www.linkedin.com/in/cliff-kinchen-mba-a2715838', 'https://x.com/KyoshiKinchen', book],
+    },
+    {
+      '@type': 'Book',
+      name: 'Resilient Warrior: Be the Standard',
+      author: { '@id': 'https://www.cliffkinchen.com/#cliff' },
+      url: book,
+      image: new URL('/img/resilient-warrior-cover.png', Astro.site).href,
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -20,8 +55,19 @@ const isPreview = !!process.env.SITE_BASE;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
-    <link rel="canonical" href={new URL(path, Astro.site).href} />
+    {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/png" href="/img/logo-ck.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cliff Kinchen | The Kinchen Standard" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cliff Kinchen, Leadership Educator, Speaker, Author" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
     {isPreview && <meta name="robots" content="noindex" />}
     <script is:inline>
       if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');
