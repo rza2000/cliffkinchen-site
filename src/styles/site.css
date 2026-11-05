@@ -96,6 +96,12 @@ p a { color: inherit; font-weight: 600; text-decoration: underline; }
   main [style*="justify-content:space-around"] { display: grid !important; grid-template-columns: repeat(4, 1fr); align-items: start !important; }
   main [style*="justify-content:space-around"] > [style*="min-width:160px"] { min-width: 0 !important; }
   main [style*="justify-content:space-around"] > [style*="width:1px"] { display: none; }
+  /* Card titles are set not to wrap, which runs them out of narrow cards. */
+  main [style*="white-space:nowrap"] { white-space: normal !important; }
+}
+/* The site-wide 25px line height only works while this 48px line stays on one row. */
+@media (min-width: 768px) and (max-width: 992px) {
+  .sec-body font[size="7"] strong { display: inline-block; line-height: 1.1; }
 }
 @media (max-width: 767px) {
   main [style*="justify-content:space-around"] { grid-template-columns: 1fr; }
