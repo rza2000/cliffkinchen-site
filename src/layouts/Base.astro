@@ -35,6 +35,7 @@ const structuredData = path === '/' && {
       url: 'https://www.cliffkinchen.com/',
       image: new URL('/img/headshot.jpg', Astro.site).href,
       jobTitle: 'Leadership Educator, Speaker, Author',
+      address: { '@type': 'PostalAddress', addressLocality: 'Charlotte', addressRegion: 'NC', addressCountry: 'US' },
       email: 'mailto:info@cliffkinchen.com',
       sameAs: ['https://www.linkedin.com/in/cliff-kinchen-mba-a2715838', 'https://x.com/KyoshiKinchen', book],
     },
