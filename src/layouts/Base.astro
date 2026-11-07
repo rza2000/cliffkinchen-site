@@ -58,6 +58,8 @@ const structuredData = path === '/' && {
     {description && <meta name="description" content={description} />}
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/png" href="/img/logo-ck.png" />
+    <!-- Proves ownership to Google Search Console. Keep it, or Search Console loses access. -->
+    <meta name="google-site-verification" content="so2O-llLnKVp7S3czDLcT7ePS3ug64SszOHUkgTjymw" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Cliff Kinchen | The Kinchen Standard" />
     <meta property="og:title" content={title} />
